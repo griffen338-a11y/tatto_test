@@ -63,9 +63,10 @@ DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=bool(os.getenv('DATABASE_URL'))  # ✅ only True if DATABASE_URL exists
     )
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
