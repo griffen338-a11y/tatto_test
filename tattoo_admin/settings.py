@@ -90,6 +90,9 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
+    "default": {  # ✅ Add this for media files
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
 }
 
 MEDIA_URL = '/media/'
