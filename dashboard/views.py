@@ -56,7 +56,7 @@ def home(request):
 
 def artists_page(request):
     artists = Artist.objects.all()
-    return render(request, 'artists.html', {'artists': artists})
+    return render(request, 'Aritsts.html', {'artists': artists})
 
 def artist_detail(request, artist_id):
     artist = get_object_or_404(Artist, id=artist_id)
