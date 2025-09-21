@@ -3,21 +3,15 @@ from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
 
-# Load environment variables from .env
+# Load environment variables
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
-
-# DEBUG True for deployment testing (set False later in prod)
 DEBUG = os.getenv("DEBUG", "False") == "True"
-
-# Allow all hosts
 ALLOWED_HOSTS = ["*"]
 
-# Applications
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
@@ -29,9 +23,10 @@ INSTALLED_APPS = [
     'django_extensions',
     'dashboard',
     'booking',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
-# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -45,7 +40,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'tattoo_admin.urls'
 
-# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -63,7 +57,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tattoo_admin.wsgi.application'
 
-# DATABASE: Neon Postgres
+# Neon Postgres DB
 DATABASES = {
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL'),
@@ -72,7 +66,14 @@ DATABASES = {
     )
 }
 
-# Password validation
+# Cloudinary media
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
+}
+
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -80,33 +81,22 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'dashboard/static')]
 
-# WhiteNoise for static files
 STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
 }
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Jazzmin
 JAZZMIN_SETTINGS = {
     "site_title": "Inkspire Admin",
     "site_header": "Inkspire Studio Dashboard",
