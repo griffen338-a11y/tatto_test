@@ -1,5 +1,10 @@
 import os
 from pathlib import Path
+import dj_database_url
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -7,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
 
 # DEBUG True for deployment testing (set False later in prod)
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # Allow all hosts
 ALLOWED_HOSTS = ["*"]
@@ -60,22 +65,12 @@ WSGI_APPLICATION = 'tattoo_admin.wsgi.application'
 
 # DATABASE 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'Stdio_tattoo@2025',  # <- update this
-        'HOST': 'db.cjtkhtgeovdizglywurl.supabase.co',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',  # required for Supabase
-        },
-    }
+    'default': dj_database_url.config(
+        default=f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}",
+        conn_max_age=600,
+        ssl_require=True,
+    )
 }
-
-
-
-
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -101,7 +96,7 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
-    "default": {  # ✅ Add this for media files
+    "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
 }
