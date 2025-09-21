@@ -1,1 +1,1 @@
-web: gunicorn tattoo_admin.wsgi:application
+web: sh start.sh
