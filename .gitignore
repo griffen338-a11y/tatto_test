@@ -1,6 +1,6 @@
-# Ignore Python compiled files
+venv/
 __pycache__/
 *.pyc
-
-# Ignore virtual environment
-venv/
+.env
+staticfiles/
+media/

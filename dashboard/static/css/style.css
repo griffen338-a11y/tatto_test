@@ -1890,7 +1890,7 @@ ul {
     top: 60px; /* adjust based on navbar height */
     left: 0;
     right: 0;
-    background-color: ; /* or your nav bg color */
+ /* or your nav bg color */
     flex-direction: column;
     align-items: center;
     gap: 1rem;
@@ -1931,7 +1931,7 @@ ul {
   position: absolute;
   inset: 0;
   background: url('../images/smalltat1.jpeg');
-center/cover no-repeat;
+
   filter: brightness(60%) grayscale(30%);
   opacity: 0.6;
   z-index: 0;
@@ -2143,18 +2143,6 @@ center/cover no-repeat;
     opacity: 0;
     transition: opacity 2s ease-out;
 }
-
-
-
-
-
-
-
-
-
-
-
-    </style>
 
 
 

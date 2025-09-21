@@ -58,13 +58,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tattoo_admin.wsgi.application'
 
-# DATABASE (SQLite for free Render plan)
+# DATABASE 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'Stdio_tattoo@2025',  # <- update this
+        'HOST': 'db.cjtkhtgeovdizglywurl.supabase.co',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',  # required for Supabase
+        },
     }
 }
+
+
+
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
